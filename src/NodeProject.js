@@ -87,7 +87,7 @@ export class NodeProject {
       },
     }
 
-    fs.writeFileSync(packageJsonFilePath, JSON.stringify(packageJsonFileContent))
+    fs.writeFileSync(packageJsonFilePath, JSON.stringify(packageJsonFileContent, null, 2))
     console.log('Created package.json file.')
   }
 }
