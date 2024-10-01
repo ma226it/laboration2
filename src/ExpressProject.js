@@ -49,24 +49,18 @@ export class ExpressProject {
     const modelsDirectory = path.join(srcDirectory, 'models')
     const routesDirectory = path.join(srcDirectory, 'routes')
 
-    if (!fs.existsSync(rootDirectory)) {
-      fs.mkdirSync(rootDirectory, { recursive: true })
-    }
+    const directories = [
+      rootDirectory,
+      srcDirectory,
+      controllersDirectory,
+      modelsDirectory,
+      routesDirectory
+    ]
 
-    if (!fs.existsSync(srcDirectory)) {
-      fs.mkdirSync(srcDirectory, { recursive: true })
-    }
-
-    if (!fs.existsSync(controllersDirectory)) {
-      fs.mkdirSync(controllersDirectory, { recursive: true })
-    }
-
-    if (!fs.existsSync(modelsDirectory)) {
-      fs.mkdirSync(modelsDirectory, { recursive: true })
-    }
-
-    if (!fs.existsSync(routesDirectory)) {
-      fs.mkdirSync(routesDirectory, { recursive: true })
-    }
+    directories.forEach(directory => {
+      if (!fs.existsSync(directory)) {
+        fs.mkdirSync(directory, { recursive: true })
+      }
+    })
   }
 }
