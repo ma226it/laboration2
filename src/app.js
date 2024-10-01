@@ -1,6 +1,5 @@
-import { NodeProject } from './NodeProject.js'
+import { ExpressProject } from './ExpressProject.js'
 
-
-const project = new NodeProject('my-node-app')
+const project = new ExpressProject('my-express-project')
 
 project.initializeProject()
