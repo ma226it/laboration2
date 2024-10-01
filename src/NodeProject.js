@@ -34,6 +34,7 @@ export class NodeProject {
    */
   initializeProject () {
     this.#createDirectoryStructure()
+    this.#createAppJsFile()
     console.log(`Project '${this.#projectName}' has been initialized successfully.`)
   }
 
@@ -57,5 +58,16 @@ export class NodeProject {
     }
 
     console.log('Directory structure created.')
+  }
+
+  /**
+   * Creates the app.js file in the src directory, and writes a welcome message to it.
+   */
+  #createAppJsFile () {
+    const appJsFilePath = path.join(this.#basePath, this.#projectName, 'src', 'app.js')
+    const appJsFileContent = `console.log('Welcome to ${this.#projectName} project!')`
+
+    fs.writeFileSync(appJsFilePath, appJsFileContent)
+    console.log('Created src/app.js file.')
   }
 }
