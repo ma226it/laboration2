@@ -35,6 +35,7 @@ export class NodeProject {
   initializeProject () {
     this.#createDirectoryStructure()
     this.#createAppJsFile()
+    this.#createPackageJsonFile()
     console.log(`Project '${this.#projectName}' has been initialized successfully.`)
   }
 
@@ -69,5 +70,24 @@ export class NodeProject {
 
     fs.writeFileSync(appJsFilePath, appJsFileContent)
     console.log('Created src/app.js file.')
+  }
+
+  /**
+   * Creates the package.json file in the root directory of the project.
+   */
+  #createPackageJsonFile () {
+    const packageJsonFilePath = path.join(this.#basePath, this.#projectName, 'package.json')
+    const packageJsonFileContent = {
+      name: this.#projectName,
+      version: "1.0.0",
+      main: "src/app.js",
+      type: "module",
+      scripts: {
+        start: "node src/app.js",
+      },
+    }
+
+    fs.writeFileSync(packageJsonFilePath, JSON.stringify(packageJsonFileContent))
+    console.log('Created package.json file.')
   }
 }
