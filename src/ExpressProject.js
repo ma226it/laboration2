@@ -32,6 +32,7 @@ export class ExpressProject {
    */
   initializeProject () {
     this.#createDirectoryStructure()
+    this.#createServerJsFile()
     console.log(`Project '${this.#projectName}' has been initialized successfully.`)
   }
 
@@ -62,5 +63,41 @@ export class ExpressProject {
         fs.mkdirSync(directory, { recursive: true })
       }
     })
+  }
+
+  /**
+   * Creates the 'server.js' file for the Express project. Which contains basic setup for an Express server.
+   */
+  #createServerJsFile () {
+    const serverJsPath = path.join(this.#basePath, this.#projectName, 'src', 'server.js')
+    const serverJsContent = `import express from 'express'
+
+const setupExpressServer = () => {
+  const app = express()
+
+  const port = process.env.PORT || 3000
+
+  app.get('/', (req, res) => {
+    res.send('Hello, world!')
+})
+
+
+
+  app.listen(port, () => {
+    console.log('Press Ctrl-C to terminate...')
+  })
+}
+
+try {
+  setupExpressServer()
+} catch (error) {
+  console.error(error)
+  process.exitCode = 1
+}
+
+`
+      fs.writeFileSync(serverJsPath, serverJsContent)
+
+      console.log('server.js file created.')
   }
 }
