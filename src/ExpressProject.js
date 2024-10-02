@@ -34,6 +34,7 @@ export class ExpressProject {
   initializeProject () {
     this.#createDirectoryStructure()
     this.#createServerJsFile()
+    this.#createPackageJsonFile()
     console.log(`Project '${this.#projectName}' has been initialized successfully.`)
   }
 
@@ -75,5 +76,32 @@ export class ExpressProject {
 
     fs.writeFileSync(serverJsPath, serverJsContent)
     console.log('server.js file created.')
+  }
+
+  /**
+   * Creates the package.json file in the root directory of the project.
+   */
+  #createPackageJsonFile () {
+    const packageJsonFilePath = path.join(this.#basePath, this.#projectName, 'package.json')
+
+    const packageJsonFileContent = {
+      name: this.#projectName,
+      version: "1.0.0",
+      main: "src/server.js",
+      type: "module",
+      scripts: {
+        start: "node src/server.js",
+        dev: "nodemon src/server.js"
+      },
+      dependencies: {
+        express: "^4.21.0"
+      },
+      devDependencies: {
+        nodemon: "^3.1.7"
+      }
+    }
+
+    fs.writeFileSync(packageJsonFilePath, JSON.stringify(packageJsonFileContent, null, 2))
+    console.log('Created package.json file.')
   }
 }
