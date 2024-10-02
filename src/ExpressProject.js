@@ -1,5 +1,6 @@
 import fs from 'fs'
 import path from 'path'
+import { generateServerJsContent } from './generateServerJsContent.js'
 
 
 export class ExpressProject {
@@ -66,38 +67,13 @@ export class ExpressProject {
   }
 
   /**
-   * Creates the 'server.js' file for the Express project. Which contains basic setup for an Express server.
+   * Creates the 'server.js' file for the Express project. With generated express setup.
    */
   #createServerJsFile () {
     const serverJsPath = path.join(this.#basePath, this.#projectName, 'src', 'server.js')
-    const serverJsContent = `import express from 'express'
+    const serverJsContent = generateServerJsContent()
 
-const setupExpressServer = () => {
-  const app = express()
-
-  const port = process.env.PORT || 3000
-
-  app.get('/', (req, res) => {
-    res.send('Hello, world!')
-})
-
-
-
-  app.listen(port, () => {
-    console.log('Press Ctrl-C to terminate...')
-  })
-}
-
-try {
-  setupExpressServer()
-} catch (error) {
-  console.error(error)
-  process.exitCode = 1
-}
-
-`
-      fs.writeFileSync(serverJsPath, serverJsContent)
-
-      console.log('server.js file created.')
+    fs.writeFileSync(serverJsPath, serverJsContent)
+    console.log('server.js file created.')
   }
 }
